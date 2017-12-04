@@ -1,0 +1,75 @@
+;; Dribble of #<IO TERMINAL-STREAM> started on 2016-10-20 17:41:48.
+#<OUTPUT BUFFERED FILE-STREAM CHARACTER #P"m-c-Demo.txt">
+[106]> (load "m-c.l")
+;; Loading file m-c.l ...
+;; Loaded file m-c.l
+T
+[107]> (mc)
+left-bank: (M M M C C C B)
+right-bank: NIL
+( m b)left-bank: (M M C C C)
+right-bank: (M B)
+yummy yummy yummy, I got Good in my tummy!!
+NIL
+[108]> 
+(mc)
+left-bank: (M M M C C C B)
+right-bank: NIL
+(m c b)left-bank: (M M C C)
+right-bank: (M C B)
+
+( c c b)move innapplicable
+NIL
+[109]> 
+(mc)
+left-bank: (M M M C C C B)
+right-bank: NIL
+(c m b)left-bank: (M M C C)
+right-bank: (C M B)
+
+
+(c b)left-bank: (M M C C C B)
+right-bank: (M)
+yummy yummy yummy, I got Good in my tummy!!
+NIL
+[110]> 
+(mc)
+left-bank: (M M M C C C B)
+right-bank: NIL
+( c c b)left-bank: (M M M C)
+right-bank: (C C B)
+
+(c b)left-bank: (M M M C C B)
+right-bank: (C)
+
+(c c b)left-bank: (M M M)
+right-bank: (C C C B)
+
+(c b)left-bank: (M M M C B)
+right-bank: (C C)
+
+(m m b)left-bank: (M C)
+right-bank: (C C M M B)
+
+(c m b)left-bank: (M C C M B)
+right-bank: (C M)
+
+(m m b)left-bank: (C C)
+right-bank: (C M M M B)
+
+(c b)left-bank: (C C C B)
+right-bank: (M M M)
+
+(c c b)left-bank: (C)
+right-bank: (M M M C C B)
+
+(c b)left-bank: (C C B)
+right-bank: (M M M C)
+
+(c c b)left-bank: NIL
+right-bank: (M M M C C C B)
+good work!
+NIL
+[111]> 
+(bye)
+Bye.

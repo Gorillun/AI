@@ -1,0 +1,118 @@
+(defclass bank()
+  (
+   (missionaries :accessor bank-missionaries :initarg :missionaries)
+   (cannibals :accessor bank-cannibals :initarg :cannibals)
+   (boat :accessor bank-boat :initarg :boat)
+   )
+  )
+(defclass state ()
+  (
+   (left-bank :accessor state-left-bank :initarg :left-bank)
+   (right-bank :accessor stae-right-bank :initarg :right-bank)
+   )
+  )
+(defmethod display ((s state))
+  (display ( state-left-bank s))
+  ( display (state-right-bank s))
+  nil
+  )
+(defclass node ()
+  (
+   (name :accessor node-name :initarg :name)
+   (state :accessor node-state :initarg :state)
+   (parent :accessor node-parent :initarg :parent)
+   (operator :accessor node-operator :initarg :operator)
+   )
+  )
+
+(defmethod display ((n node))
+  (princ (node-name n))
+  (write-string " ")
+  (if (not (rootp n))
+      (let()
+	(princ (node-name (node-parent n)))
+	(princ " ")
+	(display (node-operator n))
+	)
+    )
+  (terpri)
+  (display (node-state n))
+  nil
+  )
+
+
+(defclass operator()
+  (
+   (name :accessor operator-name :initarg :name)
+   (precondition :accessor operator-precondition :initarg :precondition)
+   (description :accessor operator-description :initarg :description)
+   )
+  )
+
+(defmethod mc ()
+  (establish-operators)
+  (setup)
+  (solve)
+  )
+
+(defmethod setup (&aux root lb rb istate)
+  (setf lb (make-instance 'bank :missionaries '(mmm) :cannibals '(ccc) :boat 'b))
+  (setf rb (make-instance 'bank :missionaries '() :cannibals '() :boat nil))
+  (setf istate (make-instance 'state :left-bank lb :right-bank rb))
+  (setf root (make-instance 'node :state istate :name 'root))
+  (setf *unexplored* (list root))
+  (setf *explored* ())
+  (setf *ng* ( make-instance 'name-generator :prefix "N"))
+  )
+
+(defmethod solve (&aux kids e-node)
+  (if *tracing-search*
+      (let ()
+	(terpi)(write-line ">>> Solve")(terpi)
+	(display-explored-nodes)
+	(display-unexplored-nodes)
+	)
+    )
+  (cond
+   ((null *unexplored*)
+    (write-line "There is no solution.")
+    (return-from solve NIL)
+    )
+   )
+  (setf e-node ( pop *unexplored*))
+  (if *tracing-search*
+      (let()
+	(display-e-node e-node)
+	)
+    )
+  (cond
+   ((goalp(node-state e-node))
+    (display-solution e-node)
+    )
+   ((exploredp e-node)
+    (solve)
+    )
+   (t
+    (push e-node *explored*)
+    (setf kids (children-of e-node))
+    (setf *unexplored* (append *unexplored* kids))
+    (solve)
+    )
+   )
+  nil
+  )
+
+(defmethod children-of ((e-node node) &Aux kids)
+  )
+
+(defmethod child-of ((n node)(o operator) &aux c)
+  (setf new-node (make-instance 'node))
+  (setf (node-name new-node) (next *ng*))
+  (setf (node-parent new-node) n)
+  (setf (node-operator new-node) o)
+  (setf c (copy-state (node-state n)))
+  (apply-operator o c)
+  (setf (node-state new-node) c )
+  new-node
+  )
+

@@ -1,0 +1,24 @@
+;; Dribble of #<IO TERMINAL-STREAM> started on 2016-11-17 13:21:43.
+#<OUTPUT BUFFERED FILE-STREAM CHARACTER #P"accumulator.txt">
+[2]> (load "accumulator.l")
+;; Loading file accumulator.l ...
+;; Loaded file accumulator.l
+T
+[3]> (setf acc (make-instance 'accumulator))
+#<ACCUMULATOR #x0003349C07E8>
+[4]> (inc acc 2)
+2
+[5]> (inc acc 5)
+7
+[6]> (inc acc 8)
+15
+[7]> (dec acc 1)
+14
+[8]> (dec acc 3)
+11
+[9]> (dec acc 1)
+10
+[10]> (reset acc)
+0
+[11]> (dribble)
+;; Dribble of #<IO TERMINAL-STREAM> finished on 2016-11-17 13:23:28.

@@ -1,0 +1,21 @@
+State Space Problem Solver for Missionaries and Cannibals
+
+Problem Statement:
+	Move three cannibals and three missionaries across a river in a boat that fits two. The cannibals can never out number the missionaries, or the missionaries will be had for dinner.
+
+Objects of the State Space World:
+	3 cannibals
+	3 missionaries
+	1 boat
+
+Representation of the States of the World:
+	The state is given by two seperate lists. The first list represents the right side of the bank with 0-3 cannibals, 0-3 missionaries and 0-1 boat. The other list represents the left side of the bank with 0-3 cannibals, 0-3 missionaries and 0-1 boat.
+
+The State Space Description:
+	I -> {<cccmmmb> <>}
+	G -> {<> <cccmmmb>}
+	O -> {<bm> <bmm> <bcm> <bc> <bcc>}
+
+The State Space Graph:
+
+

@@ -1,0 +1,30 @@
+(defclass die()
+  (
+   (number :accessor number-of-faces :initarg :number :initform 6)
+   (top :accessor top-face :initarg :number :initform 1)
+   (history :accessor face-history :initform ())
+   )
+  )
+
+(defmethod roll-die((d die))
+  (setf (top-face d) (+ 1 ( random (number-of-faces d))))
+  )
+
+(defmethod roll-for-pair((d1 die) (d2 die))
+  (setf (top-face d1) (+ 1 ( random (number-of-faces d1))))
+  (setf (top-face d2) (+ 1 ( random (number-of-faces d2))))
+  (setf (face-history d1) (cons (top-face d1) (face-history d1)))
+  (setf (face-history d2) (cons (top-face d1) (face-history d2)))
+  (cond
+   ((equal (top-face d1) (top-face d2))
+    nil
+    )
+   (t
+    (roll-for-pair d1 d2)
+    )
+   )
+  )
+
+(defmethod display((d die))
+  (format nil "[~A,~A,~A]" (top-face d) (number-of-faces d) (face-history d))
+  )
